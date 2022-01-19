@@ -8,8 +8,11 @@ from tkinter.ttk import *
 import csv
 import os
 import datetime
+#import pillow
+#import ttkwidgets
 
-import tkinter_register.py #module
+import tkinter_register  #module
+import books_issue
 #import login #module
 
 
@@ -20,37 +23,45 @@ def popup(title):
     root.mainloop()
 
     
+def login():
+    global details
+    details = None
+    
+    file1 = open('login.txt', 'r+')
+    #dic1 = eval(file1.read())   #dic1 needs to be defined
+
+    username = tkinter_register.username_login #values passed from printt1()
+    passwd = tkinter_register.passwd_login 
+    l = [username, passwd]
+    print(l)
+    
+    #if l[0] in dic1.keys() and dic1[l[0]] == l[1]:   
+     #   print('Login successful')
+      #  #verified = True
+       # details = [username, passwd]
+    #else:
+     #   print('Invalid login, try again or EXIT') #make sure nothing happens
+    # checking login, registering users and membership details, lets start with 10 day cap for late fee
+    pass
+
+
 def register():
     global details
     details = None
     file1 = open('login.txt', 'w+')
-    dic1 = eval(file1.read())
-    username = input('Enter new username: ')
-    passwd = input('Enter new password: ')
-    dic1.append([username, passwd]) #work in tkinter
+    #dic1 = eval(file1.read())    #dic1 needs to be defined
+    
+    username = tkinter_register.username_register #Values passed from printt2()
+    passwd = tkinter_register.passwd_register
+    #dic1.append([username, passwd]) #file empty so unexpected EOF error
     print('Registration successful')
+
     #verified = True
     details = [username, passwd]
+    print(details)
     # checking login, registering users and membership details
     pass
 
-
-def login():
-    global details
-    details = None
-    file1 = open('login.txt', 'r+')
-    dic1 = eval(file1.read())
-    username = input('Enter username: ')
-    passwd = input('Enter password: ') #take in from tkinter
-    l = [username, passwd]
-    if l[0] in dic1.keys() and dic1[l[0]] == l[1]:
-        print('Login successful')
-        #verified = True
-        details = [username, passwd]
-    else:
-        print('Invalid login, try again or EXIT') #make sure nothing happens
-    # checking login, registering users and membership details, lets start with 10 day cap for late fee
-    pass
 
 def issue_book():
     file = open('storage.csv', 'w+')
@@ -114,4 +125,5 @@ def write():
         # GTG CYA
 
 
-popup('Bruh')
+#popup('Bruh')
+
