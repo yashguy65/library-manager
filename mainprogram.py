@@ -8,8 +8,9 @@ from tkinter.ttk import *
 import csv
 import os
 import datetime
-import tkinter_register #module
-import login #module
+
+import tkinter_register.py #module
+#import login #module
 
 
 def popup(title):
@@ -40,7 +41,7 @@ def login():
     file1 = open('login.txt', 'r+')
     dic1 = eval(file1.read())
     username = input('Enter username: ')
-    paswd = input('Enter password: ') #take in from tkinter
+    passwd = input('Enter password: ') #take in from tkinter
     l = [username, passwd]
     if l[0] in dic1.keys() and dic1[l[0]] == l[1]:
         print('Login successful')
@@ -67,14 +68,15 @@ def issue_book():
 
         #return_date = input("Enter the date of return (DD/MM/YYYY) - ")
         time_change = datetime.delta(days=10)
-        duedate= t=rn + time_change
+        duedate = rn + time_change
         l1.append(duedate) #instead of taking input, add 10 to days and display
         print("Book must be returned before", str(duedate)) #HAVE TO PASS TO TKINTER
         #print last return date and threaten late fees TKINTER
         #w.writerow(l1) MAKE CHANGES IN FILE call write() function
+        return duedate
 
 
-def storagewrite():
+def storagewrite(duedate):
     file = open('storage.csv', 'w+')
 
     w = csv.writer(file, delimiter=',', newline='')
@@ -103,8 +105,7 @@ def storageread():
 def write():
     with open("Storage.csv", mode="w",) as f1:
         w = csv.writer(f1, delimiter=',', quotechar=" ")
-        w.writerow(["Membership Code",  "Book Code", "Book",
-                   "Author", "Date of issue", "Date of return", "Fees Due"])
+        w.writerow(["Membership Code",  "Book Code", "Book", "Author", "Date of issue", "Date of return", "Fees Due"])
         w.writerow([])
         w.writerow([])
         w.writerow([])

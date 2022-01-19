@@ -2,18 +2,21 @@ from tkinter import *
 window=Tk() #instance of frame Tk(),display root window, manages literally everything 
 
 window.geometry('500x500')
+window.resizable(width=False, height=False)
 window.title('Library Manager')
 
 def printt():
     print('LibraryManager has been launched')
     first=fn.get()
+    second=fn2.get()
+    return [first, second]
     
 def exitt():
     exit()
 
 path=r'C:\Users\yoyas\3D Objects\logo.png'
 photo1=PhotoImage(file=path)
-photo = photo1.subsample(2, 2)
+photo = photo1.subsample(5, 5)
 lab = Label(image=photo)
 lab.place(x=130,y=130)
 
@@ -23,12 +26,19 @@ lab.place(x=130,y=130)
 label1 = Label(window, fg='blue', bg='white',text='Welcome to Library manager', font=('Arial',20,'bold'))
 label2 = Label(window, fg='blue', bg='white',text='Access your account', relief='solid',font=('arial',19,)).place(x=80,y=130)
 
-label1.pack(fill=BOTH)#, pady=2,padx=2)
+label3 = Label(window, fg='black', text='Username',font=('Arial',12)).place(x=120,y=242)
+label3 = Label(window, fg='black' ,text='Password',font=('Arial',12)).place(x=120,y=282)
+label1.pack(fill=BOTH)#, pady=2,padx=2
 #button1=Button(window, text="Register").place(x=110,y=110)
-button1=Button(window, text="Register", relief=GROOVE,command=printt).place(x=250,y=250)
+button1=Button(window, text="Login", relief=GROOVE,command=printt).place(x=150,y=450)
+button1=Button(window, text="Register", relief=GROOVE,command=printt).place(x=280,y=450)
 
 fn=StringVar()
-entry = Entry(window, textvar=fn).place(x=240,y=242)
+fn2=StringVar()
+
+entry = Entry(window, textvar=fn).place(x=200,y=242)
+entry = Entry(window, show='*',textvar=fn2).place(x=200,y=282)
+
 l=['The Daughter of Time','The Big Sleep','The Spy Who Came In From the Cold','Gaudy Night','The Murder of Roger Ackroyd','Rebecca',
    'Farewell My Lovely','The Moonstone','The IPCRESS File','The Maltese Falcon','The Franchise Affair','Last Seen Wearing ...',
    'The Name of the Rose','Rogue Male','The Long Goodbye','Malice Aforethought','The Day of the Jackal','The Nine Tailors',
@@ -49,17 +59,19 @@ l=['The Daughter of Time','The Big Sleep','The Spy Who Came In From the Cold','G
    'The Sun Chemist','The Guns of Navarone','The Colour of Murder','Greenmantle','The Riddle of the Sands','Wobble to Death',
    'Red Harvest','The Key to Rebecca','Sadie When She Died','The Murder of the Maharajah','What Bloody Man Is That?','Shooting Script',
    'The Four Just Men']
-var=StringVar()
+
+#droplist
+'''var=StringVar()
 droplist=OptionMenu(window,var,*l)
 var.set('Select book you want to borrow')
 droplist.config(width=15)
-droplist.place(x=230,y=370)
+droplist.place(x=230,y=370)'''
 #print(StringVar(),"sv")
 #print(type(fn),"fn")
-
-inpute = tk.StringVar()
+'''
+inpute = StringVar()
 def auto_complete():
     return inpute.get()
 autoc = tkentrycomplete.AutocompleteCombobox(textvariable=inpute)
 autoc.set_completion_list(l)
-autoc.place(x=110, y=90)
+autoc.place(x=110, y=90)'''
