@@ -11,10 +11,11 @@ import datetime
 #import pillow
 #import ttkwidgets
 
-import tkinter_register  #module
+import MainWindow  #modules
 import books_issue
+import RegistrationPage
+import AccountFunctions
 #import login #module
-
 
 def popup(title):
     root = Tk()
@@ -24,14 +25,14 @@ def popup(title):
 
     
 def login():
-    global details
+    global details          #Function called in MainWindow(printt()function)
     details = None
     
     file1 = open('login.txt', 'r+')
     #dic1 = eval(file1.read())   #dic1 needs to be defined
 
-    username = tkinter_register.username_login #values passed from printt1()
-    passwd = tkinter_register.passwd_login 
+    username = MainWindow.username_login #values passed from printt1()
+    passwd = MainWindow.passwd_login 
     l = [username, passwd]
     print(l)
     
@@ -40,8 +41,9 @@ def login():
       #  #verified = True
        # details = [username, passwd]
     #else:
-     #   print('Invalid login, try again or EXIT') #make sure nothing happens
-    # checking login, registering users and membership details, lets start with 10 day cap for late fee
+     #   print('Invalid login, try again or EXIT')  #make sure nothing happens
+                                                    #checking login, registering users and membership details, lets start with 10 day cap for late fee
+    AccountFunctions.open_AccountFunctions()        #To open AccountFunctions Window
     pass
 
 
@@ -51,28 +53,24 @@ def register():
     file1 = open('login.txt', 'w+')
     #dic1 = eval(file1.read())    #dic1 needs to be defined
     
-    username = tkinter_register.username_register #Values passed from printt2()
-    passwd = tkinter_register.passwd_register
-    #dic1.append([username, passwd]) #file empty so unexpected EOF error
+    #dic1.append([username, passwd])   #file empty so unexpected EOF error, so commented out
     print('Registration successful')
 
     #verified = True
-    details = [username, passwd]
-    print(details)
+    #details = [username, passwd]
+    #print(details)
+    RegistrationPage.open_RegistrationPage()
     # checking login, registering users and membership details
     pass
 
 
 def issue_book():
     file = open('storage.csv', 'w+')
-
     w = csv.writer(file, delimiter=',', newline='')
-
+    
     while True:
         l1 = []
-        
 #tkinter bs here to select book from dropdown and all that
-
         issue_date = input("Enter the date of issue (DD/MM/YYYY) - ")
         rn = datetime.datetime.now()
         l1.append(issue_date) #to get when he's issued a book
@@ -85,7 +83,7 @@ def issue_book():
         #print last return date and threaten late fees TKINTER
         #w.writerow(l1) MAKE CHANGES IN FILE call write() function
         return duedate
-
+    
 
 def storagewrite(duedate):
     file = open('storage.csv', 'w+')
