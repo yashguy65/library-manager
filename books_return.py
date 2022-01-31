@@ -1,8 +1,11 @@
 from tkinter import *
 from datetime import date
-import mainprogram
+import os
+import csv
 import MainWindow
 import AccountFunctions
+
+returned=False
 
 def open_booksreturn(username,bookname,duedate):  #Called function in AccountFunctions.py(Return a book button)
     books_return_window = Toplevel(MainWindow.window)
@@ -27,8 +30,25 @@ def open_booksreturn(username,bookname,duedate):  #Called function in AccountFun
     label5 = Label(books_return_window, fg='white', bg='black', text=f'You have to pay {latefee} as late fees', font=('Arial',24,'bold')).pack(fill=BOTH)
 
     def switch_state():
+        global returned
+        if returned == False:
+            file = open('storage.csv', 'w+')
+            file2 = open('temp,csv','w')
+            writer = csv.writer(file, delimiter=',', newline='')
+            #COLUMNS:- USERNAME | BOOK ISSUED | DUE DATE | 
+            reader = csv.reader(file, delimiter=',', newline='')
+            for row in reader:
+                if row[0] != username:
+                    writer.writerow(row)
+            file.close()
+            file2.close()
+            os.remove('storage.csv')
+            os.rename('temp.csv','storage.csv')
+
+            file.close()
         if pay['state'] == NORMAL:
             pay['state'] = DISABLED
+            returned=True
 
     if latefee != 0:
         #display pay now button
