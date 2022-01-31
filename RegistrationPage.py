@@ -69,7 +69,7 @@ def ObtainRegistrationValues():    #Called function in RegistrationPage.py confi
     username_register = username_register_init.get()
     password_register = password_register_init.get()
     choice_method = variable.get()
-    print(name_register, age_register, ph_number_register, username_register, password_register, choice_method)
+    return (name_register, age_register, ph_number_register, username_register, password_register, choice_method)
     messagebox.showinfo('Account Created!', 'Go back to the Main Window and login again!')
 
 #Closing registration page, reopening MainWindow ez
