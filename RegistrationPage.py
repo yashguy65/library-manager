@@ -1,8 +1,10 @@
 from tkinter import *
 from tkinter import messagebox
+import os
 
 import mainprogram  #modules
 import MainWindow
+import books_issue
 
 def open_RegistrationPage():   #Called function in MainWindow.py(button2)
     global registrationPage_window
@@ -59,23 +61,95 @@ def open_RegistrationPage():   #Called function in MainWindow.py(button2)
     dropdown.place(x=300, y=390)
 
     confirm_button = Button(registrationPage_window, text='Confirm', relief=GROOVE, command=ObtainRegistrationValues).place(x=60, y=450)
-    exit_button = Button(registrationPage_window, text='Back to Main Window', relief=GROOVE, command=exit_RegistrationPage).place(x=60, y=480)
+    #exit_button = Button(registrationPage_window, text='Back to Main Window', relief=GROOVE, command=exit_RegistrationPage).place(x=60, y=480)
 
 #Obtaining all entered values
-def ObtainRegistrationValues():    #Called function in RegistrationPage.py confirm button
+def ObtainRegistrationValues():
+
+    #Called function in RegistrationPage.py confirm button
     name_register = name_register_init.get()
     age_register = age_register_init.get()
     ph_number_register = ph_number_register_init.get()
     username_register = username_register_init.get()
     password_register = password_register_init.get()
     choice_method = variable.get()
-    return (name_register, age_register, ph_number_register, username_register, password_register, choice_method)
-    messagebox.showinfo('Account Created!', 'Go back to the Main Window and login again!')
 
+    
+    tup = [name_register, age_register, ph_number_register, username_register, password_register, choice_method]
+    print(name_register, age_register, ph_number_register, username_register, password_register, choice_method)
+
+    booly = True
+    if os.path.exists('login.txt'):
+        file1 = open('login.txt', 'r+')
+        dic1 = list((file1.read().strip(', ')))
+        l = [tup[3], tup[4]]
+        l = list(l)
+        if len(dic1) != 0:
+            userlist = []
+            for k in range(len(dic1)):
+                userlist.append(dic1[k][0])
+            
+            if l[0] in userlist:
+                popup('Username Taken')
+                booly = False
+            else:
+                dic1.append(l)
+                file1.seek(0)
+                
+                
+                file1.write(listToString(dic1))    
+                file1.close()
+            
+        else:
+            l2 = [l]
+            file1.seek(0)
+            file1.write(listToString(l2))      #str(l2)
+            file1.close()
+    else:
+        file1 = open('login.txt', 'w+')
+        l = [tup[3], tup[4]]
+        l2 = [l]
+        
+        
+        file1.write(listToString(l2))            #str(l2)
+        file1.close()
+
+    if booly:
+        registrationPage_window.destroy()
+        books_issue.open_booksissue()
+
+    else:
+        pass
+
+
+    
+    #checking login, registering users and membership details
+    #messagebox.showinfo('Account Created!', 'Go back to the Main Window and login again!')
+    
+    
+'''
 #Closing registration page, reopening MainWindow ez
 def exit_RegistrationPage():
     registrationPage_window.destroy()
     MainWindow.window.deiconify()
-    
-    
+'''
+def listToString(s):
+    str1 = "" 
 
+   
+    for ele in s: 
+        str1 += str(ele)
+
+    return str1
+
+    
+'''
+file1 = open('login.txt', 'a+')
+    dic1 = [file1.read()]
+    print(dic1)
+    l = [tup[3], tup[4]]
+    dic1.append(l)
+    file1.write(str(l))
+    file1.close()
+    print('Registration successful')
+'''

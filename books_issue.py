@@ -1,11 +1,15 @@
+
 #Importing Tkinter
 from tkinter import *
-import ttkwidgets
-from ttkwidgets.autocomplete import AutocompleteEntryListbox
 
-import mainprogram #Modules
+from tkinter import ttk
+import ttkwidgets
+from ttkwidgets.autocomplete import AutocompleteEntry
+from datetime import date, timedelta
+
+import mainprogram
+                          #Modules
 import MainWindow
-import AccountFunctions
 
 def open_booksissue():                 #Called function in mainprogram.py
     books_issue_window = Toplevel(MainWindow.window)  #To open new window when login clicked
@@ -13,13 +17,17 @@ def open_booksissue():                 #Called function in mainprogram.py
     books_issue_window.title('Issue a book')
     books_issue_window.resizable(width=False, height=False)
 
-    frame = Frame(books_issue_window, bg = '#DFE7F2')   #Makes a frame?(I copied it from online idk)
-    frame.pack(expand = True)
+    frame = Frame(books_issue_window)   #Makes a frame?(I copied it from online idk)
+    frame.place(x=40, y=200)
 
     #Titles
     label1 = Label(books_issue_window, fg='white', bg='black', text='Issue a Book', font=('Arial',24,'bold')).pack(fill=BOTH)
     label2 = Label(books_issue_window, fg='white', bg='black', text='Book List:', font=('Arial',15)).place(x=20, y=60)
 
+    global getBookbutton
+    getBookbutton = Button(books_issue_window, text = 'Issue', state = NORMAL, command = getbook)
+    getBookbutton.pack(side=BOTTOM)
+    
     list_books=['The Daughter of Time','The Big Sleep','The Spy Who Came In From the Cold','Gaudy Night','The Murder of Roger Ackroyd','Rebecca',
        'Farewell My Lovely','The Moonstone','The IPCRESS File','The Maltese Falcon','The Franchise Affair','Last Seen Wearing ...',
        'The Name of the Rose','Rogue Male','The Long Goodbye','Malice Aforethought','The Day of the Jackal','The Nine Tailors',
@@ -41,12 +49,46 @@ def open_booksissue():                 #Called function in mainprogram.py
        'Red Harvest','The Key to Rebecca','Sadie When She Died','The Murder of the Maharajah','What Bloody Man Is That?','Shooting Script',
        'The Four Just Men']
 
+    global book_var
+    book_var = StringVar(books_issue_window)
     
-    entry = AutocompleteEntryListbox(
-        frame,                               #Creates listbox
-        width = 50,                  
-        font = ('times', 15),            #NEed function to return issued book
+    entry1 = AutocompleteEntry(
+        books_issue_window,                       #Creates listbox
+        width = 50,
+        textvariable = book_var,
+        font = ('Arial', 18),
         completevalues = list_books
-        ).pack()
+        ).pack(padx = 40, pady = 120)
 
-    AccountFunctions.AccountFunctions_window.destroy()          #Destroys AccountFunctions screen
+    allbooks_var = StringVar(value=list_books)
+    listbox = Listbox(
+        frame,
+        listvariable=allbooks_var,
+        width = 50,
+        height = 10,
+        )
+    listbox.pack(side='left', fill='y')
+
+    scrollbar = Scrollbar(
+        frame,
+        orient = 'vertical',
+        command=listbox.yview
+        )
+    scrollbar.pack(side='right', fill='y')
+
+    listbox.config(yscrollcommand=scrollbar.set)
+
+    
+def getbook():
+    issued_book = book_var.get()
+    print(issued_book)
+    mainprogram.switch_state(getBookbutton)
+
+    rn = date.today()
+    duedate = rn + timedelta(days=10)
+    print("Book must be returned before", str(duedate)) #print last return date and threaten late fees TKINTER
+    bookname = str(issued_book)
+    mainprogram.storagewrite(mainprogram.lol[0],bookname,duedate)
+
+
+

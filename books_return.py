@@ -2,8 +2,8 @@ from tkinter import *
 from datetime import date
 import os
 import csv
+import mainprogram
 import MainWindow
-import AccountFunctions
 
 returned=False
 
@@ -52,9 +52,9 @@ def open_booksreturn(username,bookname,duedate):  #Called function in AccountFun
 
     if latefee != 0:
         #display pay now button
-        pay = Checkbutton(text="Pay now", state=NORMAL,command=switch_state)
+        pay = Button(text="Pay now", state=NORMAL,command=switch_state)
         pay.pack(side=BOTTOM)
 
-    AccountFunctions.AccountFunctions_window.destroy()
+    
 
     

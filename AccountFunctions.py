@@ -1,3 +1,4 @@
+'''
 #Module for asking the user what to do after logging in
 
 #Importing tkinter
@@ -19,6 +20,6 @@ def open_AccountFunctions():        #Called function in mainprogram.py(login())
 
     issue_button = Button(AccountFunctions_window, text='Issue a book', relief=GROOVE, command=books_issue.open_booksissue).place(x=100, y=70)
     return_button = Button(AccountFunctions_window, text = 'Return a book', relief=GROOVE, command=books_return.open_booksreturn).place(x=100, y=130)
-
+'''
 
 
